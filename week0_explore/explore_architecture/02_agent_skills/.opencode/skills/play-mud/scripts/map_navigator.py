@@ -3,35 +3,35 @@ import os
 import collections
 
 class MapNavigator:
-    def __init__(self, data_dir="/home/ubunt22jose/dev/proyectos/claude-code-camp-2026-Q2/week0_explore/preview/data/world/wld/"):
+    def __init__(self, data_dir="/home/ubunt22jose/dev/proyectos/claude-code-camp-2026-Q2/week0_explore/preview/web/public/data/"):
         self.data_dir = data_dir
         self.graph = {}  # room_id -> {exits: {dir: room_linked}, name: name}
         self.load_map()
 
     def load_map(self):
-        for filename in os.listdir(self.data_dir):
-            if filename.endswith(".json"):
-                with open(os.path.join(self.data_dir, filename), 'r') as f:
-                    try:
-                        rooms = json.load(f)
-                        for room in rooms:
-                            room_id = room['id']
-                            self.graph[room_id] = {
-                                'name': room['name'],
-                                'exits': {exit['dir']: exit['room_linked'] for exit in room['exits']}
-                            }
-                    except (json.JSONDecodeError, KeyError):
-                        continue
+        filename = os.path.join(self.data_dir, "rooms.json")
+        if os.path.exists(filename):
+            with open(filename, 'r') as f:
+                try:
+                    data = json.load(f)
+                    for room_id, room in data.items():
+                        self.graph[room_id] = {
+                            'name': room['name'],
+                            'exits': {exit['dir']: str(exit['room_linked']) for exit in room.get('exits', [])}
+                        }
+                except (json.JSONDecodeError, KeyError):
+                    pass
 
-    def find_path(self, start_room, target_name):
-        # BFS to find the path to a room name
+    def find_path(self, start_room, target_query):
+        # BFS to find the path to a room name or ID
         queue = collections.deque([(start_room, [])])
         visited = {start_room}
         
         while queue:
             current_room, path = queue.popleft()
             
-            if target_name.lower() in self.graph.get(current_room, {}).get('name', '').lower():
+            # Check if current_room matches query (as ID or part of name)
+            if target_query == str(current_room) or target_query.lower() in self.graph.get(current_room, {}).get('name', '').lower():
                 return path
             
             for direction, neighbor in self.graph.get(current_room, {}).get('exits', {}).items():

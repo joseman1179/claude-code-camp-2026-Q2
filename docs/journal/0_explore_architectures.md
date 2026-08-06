@@ -26,3 +26,40 @@
   * **Ability Practice:** The "practice kick" task was unsuccessful.
   * **Boss Battle Goal:** The directive to defeat the Massive Minotaur proved too intensive for the execution environment, causing WSL2 to throw a runtime error and crash the command.
 
+## Agent Skills driven by main agent
+
+## Environment Setup
+* **Agent Framework:** OpenCode
+* **LLM Engine:** Gemini 3.1 Flash Lite
+ 
+## Technical Goal
+   Create Agent Skills driven by main agent eg. ~/.skills
+
+# Technical Uncertainty
+   I'm uncertain if functional Skills can be created in opencode 
+   i'm uncertain if i will have enough tokens to run the skill to achieve big goals as defeat the massive minotaur
+
+## Technical Hypotheses 
+   I think the agent won't be able to use the skills in subtasks.
+   I think that to implement an agentic loop, it is necessary to store part of the memory in a database.
+
+## Technical Observations
+   The agent is capable of carrying out simple objectives or goals. 
+   When executing complex tasks, the agent requests to run scripts and also seeks input on certain decisions instead of making them on its own.
+
+## Technical Conclusions
+   Agent Skills can connect to the game and play it without major issues.
+   Agent skills can perform simple, discrete tasks.
+   Greater player control is needed, as well as better memory of the game currently being played.
+
+## Key Takeaway
+   To build an agentic loop, skills are the foundation, but much more is required.
+
+
+
+  
+
+
+
+
+

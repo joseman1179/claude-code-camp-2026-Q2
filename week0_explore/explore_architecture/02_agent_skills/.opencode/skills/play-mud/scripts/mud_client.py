@@ -8,37 +8,50 @@ class MUDClient:
         self.port = port
         self.sock = None
 
+    def read_until(self, prompt, timeout=10):
+        """Reads until a specific prompt is found."""
+        self.sock.settimeout(timeout)
+        data = ""
+        while prompt not in data:
+            try:
+                chunk = self.sock.recv(4096).decode('ascii', errors='ignore')
+                if not chunk:
+                    break
+                data += chunk
+                
+                # Automatically handle Yes/No confirmation
+                if "Y/N" in data:
+                    print("DEBUG: Yes/No detected, sending Y")
+                    self.sock.send(b"Y\n")
+                    # Clear data to avoid infinite loop
+                    data = ""
+            except socket.timeout:
+                break
+        return data
+    
     def connect(self, username, password):
         """Connects to the MUD and performs automated login."""
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((self.host, self.port))
         
         # Read until username prompt
-        time.sleep(1)
-        self.sock.recv(4096)
-        
-        # Send username
+        self.read_until("By what name do you wish to be known?")
         self.sock.send(f"{username}\n".encode('ascii'))
         
         # Read until password prompt
-        time.sleep(1)
-        self.sock.recv(4096)
-        
-        # Send password
+        self.read_until("Password:")
         self.sock.send(f"{password}\n".encode('ascii'))
         
-        # Read MOTD
-        time.sleep(2)
-        self.sock.recv(4096)
+        # Handle Y/N confirmation for password
+        self.read_until("Did I get that right")
+        self.sock.send(b"Y\n")
         
-        # Press Return to clear MOTD
+        # MOTD
+        self.read_until(">")
         self.sock.send(b"\n")
         
-        # Read Menu
-        time.sleep(1)
-        self.sock.recv(4096)
-        
-        # Select "1" to enter the game
+        # Menu
+        self.read_until("1)")
         self.sock.send(b"1\n")
 
 

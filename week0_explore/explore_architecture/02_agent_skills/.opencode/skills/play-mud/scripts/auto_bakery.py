@@ -9,25 +9,18 @@ def get_current_room_id(nav, client):
     
     print(f"DEBUG: Response:\n{response}")
     
-    # Try to find a line that matches a room name in the map
+    # Find the first line after the prompt line
     lines = [line.strip() for line in response.split('\n') if line.strip()]
     
-    for line in lines:
-        # Ignore lines with status/prompts
-        if ">" in line:
-            # Maybe the room name is on the same line after >
-            parts = line.split('>')
-            if len(parts) > 1:
-                potential_name = parts[1].strip()
-                if potential_name:
-                    for room_id, data in nav.graph.items():
-                        if potential_name == data['name']:
-                            return room_id
-        
-        # Check against all lines
-        for room_id, data in nav.graph.items():
-            if line == data['name']:
-                return room_id
+    for i, line in enumerate(lines):
+        if ">" in line and i + 1 < len(lines):
+            potential_name = lines[i+1].strip()
+            print(f"DEBUG: Potential room name: {potential_name}")
+            
+            for room_id, data in nav.graph.items():
+                if potential_name.lower() in data['name'].lower() or data['name'].lower() in potential_name.lower():
+                    print(f"DEBUG: Matched {room_id}: {data['name']}")
+                    return room_id
     
     return None
 
@@ -46,10 +39,18 @@ def auto_navigate_to_bakery():
         print(f"Starting in room: {current_room}")
         
         # 2. Get path to Bakery
-        path = nav.find_path(current_room, "Bakery")
+        # Try all bakery rooms and find the closest one
+        bakery_rooms = [room_id for room_id, data in nav.graph.items() if "bakery" in data['name'].lower()]
+        
+        path = None
+        for bakery_id in bakery_rooms:
+            path = nav.find_path(current_room, bakery_id)
+            if path:
+                print(f"Found path to bakery {bakery_id}")
+                break
         
         if not path:
-            print("Could not find path to bakery.")
+            print("Could not find path to any bakery.")
             return
 
         # 3. Execute path

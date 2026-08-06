@@ -9,5 +9,9 @@
 room_names.txt
 
 # node_modules
-weeko_explore/02_agent_skills/.opencode/node_modules
+week0_explore/explore_architecture/02_agent_skills/.opencode/node_modules
+
+#opencode prompts
+/.opencode/
+
 
