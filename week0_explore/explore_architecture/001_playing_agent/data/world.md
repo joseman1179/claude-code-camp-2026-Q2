@@ -7,4 +7,4 @@
   - Training area for new adventurers.
 
 ## Current Player Status:
-- Player located at entrance (Academy). Goal "Find the bakery" achieved via data inspection.
+- Player is level 34. Goal "Reach level 7" achieved.

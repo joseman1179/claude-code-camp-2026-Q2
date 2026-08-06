@@ -4,3 +4,10 @@
 # Environment / secrets
 .env
 .env.local
+
+# room names
+room_names.txt
+
+# node_modules
+weeko_explore/02_agent_skills/.opencode/node_modules
+
