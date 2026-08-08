@@ -176,13 +176,13 @@ While basic tasks (like retrieving menus) succeed, advanced skill execution and 
    The state of the game was not saved in the player.md and  world.md file.
    
    Testing the Sub-Agent
-   <img src="docs/images/test_sub-agent.png" alt="Testing the Sub Agent" width="800"/>
+   <img src="../../images/test_sub-agent.png" alt="Testing the Sub Agent" width="800"/>
     
     Showing the score of Smarty character using the Sub-Agent
-   <img src="docs/images/score_of_smarty.png" alt="Score of Smarty" width="800"/>
+   <img src="../../images/score_of_smarty.png" alt="Score of Smarty" width="800"/>
 
     Parallel execution of two Sub-Agents. The Sub-A
-   <img src="docs/images/parallel_execution_sub-agents.png" alt=" Parallel execution of two Sub-Agents" width="800"/>
+   <img src="../../images/parallel_execution_sub-agents.png" alt=" Parallel execution of two Sub-Agents" width="800"/>
 
 ## Technical Conclusions
    Agent Skills and Sub-Agents deliver comparable functionality in single-agent workflows.
@@ -214,7 +214,7 @@ While basic tasks (like retrieving menus) succeed, advanced skill execution and 
 
   Tool Registration Friction: Gemini automatically reads Python type hints and docstrings to create tools. However, wiring these functions correctly inside the execution loop required extra manual setup.
 
-     <img src="docs/images/agent_sdk_gemini.png" alt="Testing the Sub Agent" width="800"/>
+  <img src="../../images/agent_sdk_gemini.png" alt="Testing the Sub Agent" width="800"/>
 
   Quota Management: Gemini's Lite models trigger rate-limit errors quickly during tool loops. Managing execution speed manually was necessary to keep the agent running.
 
@@ -246,11 +246,11 @@ While basic tasks (like retrieving menus) succeed, advanced skill execution and 
 
 ## Technical Observations
   Rapid Workflow Prototyping vs. Protocol Compatibility: While n8n excels at rapidly building standard API and webhook workflows, it lacks native support for the low-level, stateful network protocols (such as Telnet/Raw Sockets) required to interact directly with a MUD server.
-  <img src="docs/images/n8n_no_interaction.png" alt="n8n no interaction" width="800"/>
+  <img src="../../images/n8n_no_interaction.png" alt="n8n no interaction" width="800"/>
 
 
   Friction in Custom Bridge Scripts: Adapting the Python execution script to act as an input/output node or webhook payload handler for n8n introduces excessive architectural complexity without providing significant benefits.
-  <img src="ddocs/images/adapt_python_to_n8n.png" alt="adaptation python input n8n " width="800"/>
+  <img src="../../images/adapt_python_to_n8n.png" alt="adaptation python input n8n " width="800"/>
 
 ## Technical Conclusions
 

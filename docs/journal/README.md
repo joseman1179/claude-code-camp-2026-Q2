@@ -16,7 +16,7 @@ What are you uncertain about in terms of technical achievemenet which could resu
 ## Technical Hypotheses 
 Please make an educated guess on what you think the technical outcome will be.
 
-## Technical Observerations
+## Technical Observations
 While implementing your technical experiements what key observsations can you share which would be useful for someone to know trying to replicate your experience.
 
 | If you have a considerable amount of documentation please summarize and link to documentation. This section is the perfect place to show proof of work such as screenshot, code samples, benchmarks.
