@@ -15,4 +15,12 @@ opencode.json
 #opencode prompts
 /.opencode/
 
+#pi prompts
 
+/.pi/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
