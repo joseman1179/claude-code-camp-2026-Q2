@@ -1,0 +1,12 @@
+tasks:
+  player:
+    provider: deepseek
+    model: deepseek-v4-pro
+    prompt_override:
+      system: true
+
+mud:
+  host: localhost
+  port: 4000
+  username: vlade
+  password: clave

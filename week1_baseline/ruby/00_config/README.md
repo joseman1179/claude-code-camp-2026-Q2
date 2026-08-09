@@ -91,7 +91,7 @@ The following properties so far:
 ```yaml
 tasks:
   player:
-    provider: anthropic        # provider name (string)
+    provider: anthropic          # provider name (string)
     model: claude-haiku-4-5
     prompt_override:
       system: true
@@ -117,8 +117,8 @@ Config dir:     /home/andrew/Sites/Claude-Code-Camp/.boukensha
 Tasks:          player
 
 -- player task --
-Provider:       anthropic
-Model:          claude-haiku-4-5
+Provider:       deepseek
+Model:          deepseek-v4-pro
 Prompt override?true
 System prompt:  You are a MUD player assistant. Use the tools available to y...
 
