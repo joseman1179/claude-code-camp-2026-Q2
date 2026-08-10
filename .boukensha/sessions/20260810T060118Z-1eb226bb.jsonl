@@ -1,0 +1,6 @@
+{"phase":"session_start","task":"player","max_iterations":25,"max_output_tokens":1024,"model":"deepseek-v4-pro","provider":"deepseek","session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:01:18-05:00"}
+{"phase":"turn","n":1,"session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:02:16-05:00"}
+{"phase":"iteration","n":1,"max":25,"session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:02:16-05:00"}
+{"phase":"prompt","message_count":1,"messages":[{"role":"user","content":"Hello , define yourself in a phrase"}],"tool_count":0,"tools":[],"session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:02:16-05:00"}
+{"phase":"response","text":"A MUD Journey Player Agent: your automated adventurer.","usage":{"prompt_tokens":61,"completion_tokens":89,"total_tokens":150,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":76},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":61},"stop_reason":null,"task":"player","provider":"deep_seek","model":"deepseek-v4-pro","usage_unit":"tokens","input_tokens":61,"output_tokens":89,"cost_usd":0.0002085,"session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:02:18-05:00"}
+{"phase":"turn_end","reason":"completed","iterations":1,"tokens":null,"session_id":"20260810T060118Z-1eb226bb","at":"2026-08-10T01:02:18-05:00"}
