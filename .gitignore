@@ -24,3 +24,7 @@ opencode.json
 __pycache__/
 *.pyc
 *.egg-info/
+
+
+#test
+/test/
