@@ -1,0 +1,504 @@
+{
+  "name": "mud-manager",
+  "version": "0.1.0",
+  "tools": [
+    {
+      "name": "look",
+      "description": "Look around your current room.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "examine",
+      "description": "Examine an object or character in detail.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "The object or character to examine."
+          }
+        },
+        "required": [
+          "target"
+        ]
+      }
+    },
+    {
+      "name": "check",
+      "description": "Check your character's score and current vitals.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "move",
+      "description": "Move one room in a compass direction (or up/down).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "north",
+              "east",
+              "south",
+              "west",
+              "up",
+              "down"
+            ],
+            "description": "Compass direction to travel."
+          }
+        },
+        "required": [
+          "direction"
+        ]
+      }
+    },
+    {
+      "name": "flee",
+      "description": "Flee from combat.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "set_position",
+      "description": "Change your body position (stand, sit, rest, sleep, wake).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pos": {
+            "type": "string",
+            "enum": [
+              "stand",
+              "sit",
+              "rest",
+              "sleep",
+              "wake"
+            ],
+            "description": "Body position."
+          }
+        },
+        "required": [
+          "pos"
+        ]
+      }
+    },
+    {
+      "name": "track",
+      "description": "Track a target through the wilderness.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "victim": {
+            "type": "string",
+            "description": "Who to track."
+          }
+        },
+        "required": [
+          "victim"
+        ]
+      }
+    },
+    {
+      "name": "attack",
+      "description": "Attack a target with a combat style (defaults to kill).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "style": {
+            "type": "string",
+            "enum": [
+              "hit",
+              "murder",
+              "kill"
+            ],
+            "description": "Combat style."
+          },
+          "target": {
+            "type": "string",
+            "description": "Who or what to attack."
+          }
+        },
+        "required": [
+          "target"
+        ]
+      }
+    },
+    {
+      "name": "skill_strike",
+      "description": "Use a combat skill against a target (backstab, bash, kick, rescue, assist).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "skill": {
+            "type": "string",
+            "enum": [
+              "backstab",
+              "bash",
+              "kick",
+              "rescue",
+              "assist"
+            ],
+            "description": "Combat skill."
+          },
+          "target": {
+            "type": "string",
+            "description": "Who to strike."
+          }
+        },
+        "required": [
+          "skill",
+          "target"
+        ]
+      }
+    },
+    {
+      "name": "consider",
+      "description": "Assess a target's strength relative to yours.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Who to consider."
+          }
+        },
+        "required": [
+          "target"
+        ]
+      }
+    },
+    {
+      "name": "say",
+      "description": "Say something to everyone in the room.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "What to say."
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    },
+    {
+      "name": "tell",
+      "description": "Send a private message to another player.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Player to tell."
+          },
+          "text": {
+            "type": "string",
+            "description": "Message text."
+          }
+        },
+        "required": [
+          "target",
+          "text"
+        ]
+      }
+    },
+    {
+      "name": "channel_say",
+      "description": "Speak on a public channel (shout, gossip, auction, grats, holler).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "enum": [
+              "shout",
+              "gossip",
+              "auction",
+              "grats",
+              "holler"
+            ],
+            "description": "Channel to speak on."
+          },
+          "text": {
+            "type": "string",
+            "description": "What to say."
+          }
+        },
+        "required": [
+          "channel",
+          "text"
+        ]
+      }
+    },
+    {
+      "name": "get_item",
+      "description": "Pick up an object.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "obj": {
+            "type": "string",
+            "description": "Object to get."
+          }
+        },
+        "required": [
+          "obj"
+        ]
+      }
+    },
+    {
+      "name": "drop_item",
+      "description": "Drop an object from your inventory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "obj": {
+            "type": "string",
+            "description": "Object to drop."
+          }
+        },
+        "required": [
+          "obj"
+        ]
+      }
+    },
+    {
+      "name": "put_item",
+      "description": "Put an object into a container.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "obj": {
+            "type": "string",
+            "description": "Object to put."
+          },
+          "container": {
+            "type": "string",
+            "description": "Container to put it into."
+          }
+        },
+        "required": [
+          "obj",
+          "container"
+        ]
+      }
+    },
+    {
+      "name": "equip_item",
+      "description": "Wear, wield, grab, hold, or remove an item.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slot_op": {
+            "type": "string",
+            "enum": [
+              "wear",
+              "wield",
+              "grab",
+              "hold",
+              "remove"
+            ],
+            "description": "Equipment operation."
+          },
+          "obj": {
+            "type": "string",
+            "description": "Item to equip."
+          }
+        },
+        "required": [
+          "slot_op",
+          "obj"
+        ]
+      }
+    },
+    {
+      "name": "consume_item",
+      "description": "Eat, taste, drink, or sip something.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "eat",
+              "taste",
+              "drink",
+              "sip"
+            ],
+            "description": "How to consume it."
+          },
+          "obj": {
+            "type": "string",
+            "description": "What to consume."
+          }
+        },
+        "required": [
+          "mode",
+          "obj"
+        ]
+      }
+    },
+    {
+      "name": "cast_spell",
+      "description": "Cast a spell, optionally at a target.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "spell": {
+            "type": "string",
+            "description": "Spell to cast."
+          },
+          "target": {
+            "type": "string",
+            "description": "Optional target of the spell."
+          }
+        },
+        "required": [
+          "spell"
+        ]
+      }
+    },
+    {
+      "name": "use_magic_item",
+      "description": "Use, quaff, or recite a magic item.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "use",
+              "quaff",
+              "recite"
+            ],
+            "description": "How to use it."
+          },
+          "item": {
+            "type": "string",
+            "description": "Item to use."
+          }
+        },
+        "required": [
+          "mode",
+          "item"
+        ]
+      }
+    },
+    {
+      "name": "shop",
+      "description": "Buy, sell, list, value, or offer in a shop.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "buy",
+              "sell",
+              "list",
+              "value",
+              "offer"
+            ],
+            "description": "Shop operation."
+          },
+          "args": {
+            "type": "string",
+            "description": "Optional argument (item name, etc.)."
+          }
+        },
+        "required": [
+          "op"
+        ]
+      }
+    },
+    {
+      "name": "practice",
+      "description": "Practice a skill, or list what you can practice.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "skill": {
+            "type": "string",
+            "description": "Optional skill to practice."
+          }
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "save_character",
+      "description": "Save your character to disk.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "send_raw",
+      "description": "Send a raw command line to the MUD (escape hatch).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "raw": {
+            "type": "string",
+            "description": "The raw command text."
+          }
+        },
+        "required": [
+          "raw"
+        ]
+      }
+    },
+    {
+      "name": "poll",
+      "description": "Return any async output that arrived since the last command.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    },
+    {
+      "name": "mud_status",
+      "description": "Report the current connection and login status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+        },
+        "required": [
+
+        ]
+      }
+    }
+  ]
+}

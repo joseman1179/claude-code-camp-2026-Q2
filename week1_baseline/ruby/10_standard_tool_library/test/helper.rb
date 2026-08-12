@@ -6,9 +6,10 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "boukensha"
 
 # The MCP tests need a real MCP server to spawn. The mud-manager daemon in the
-# week0_explore package is the one we have, so it plays the role of "some MCP
-# server" — the code under test knows nothing about it beyond command/args/env.
-MUD_MANAGER_ROOT = File.expand_path("../../../../week0_explore/mud_manager", __dir__)
+# week1_baseline/mud_manager_mcp package is the one we have, so it plays the
+# role of "some MCP server" — the code under test knows nothing about it beyond
+# command/args/env.
+MUD_MANAGER_ROOT = File.expand_path("../../../mud_manager_mcp", __dir__)
 MUD_MANAGER_BIN  = File.join(MUD_MANAGER_ROOT, "bin", "mud-manager")
 MUD_MANAGER_LIB  = File.join(MUD_MANAGER_ROOT, "lib")
 
@@ -16,10 +17,10 @@ module McpTestHelper
   # Spawn a FakeMud for the daemon to talk to, or skip if the sibling package
   # isn't checked out.
   def start_fake_mud
-    skip "mud_manager not found at #{MUD_MANAGER_ROOT}" unless File.exist?(MUD_MANAGER_BIN)
+    skip "mud_manager_mcp not found at #{MUD_MANAGER_ROOT}" unless File.exist?(MUD_MANAGER_BIN)
     $LOAD_PATH.unshift(MUD_MANAGER_LIB) unless $LOAD_PATH.include?(MUD_MANAGER_LIB)
-    require "mud_manager/fake_mud"
-    MudManager::FakeMud.new
+    require "mud_manager_mcp/fake_mud"
+    MudManagerMcp::FakeMud.new
   end
 
   # The credentials the daemon needs to reach the fake MUD.

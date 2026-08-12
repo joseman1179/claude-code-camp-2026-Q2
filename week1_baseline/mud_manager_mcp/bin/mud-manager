@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# The mud-manager daemon: exposes MudManager (a stateful telnet session plus a
+# table of command primitives) as tools over stdio, so agents in any language
+# can drive the MUD without touching Ruby or telnet.
+#
+#   mud-manager --mcp          # MCP (JSON-RPC 2.0) server — the default
+#   mud-manager --stdio-json   # raw JSON-line protocol (escape hatch)
+#   mud-manager --list-tools   # print the advertised tool names and exit
+#   mud-manager --dump-spec    # print primitives.json and exit
+#
+# Credentials travel by environment (MUD_HOST / MUD_PORT / MUD_NAME /
+# MUD_PASSWORD). The session is opened lazily on the first command.
+
+# Domain gem first: prefer an installed mud_manager, fall back to the sibling
+# source checkout so the daemon runs without gem install.
+begin
+  require "mud_manager"
+rescue LoadError
+  $LOAD_PATH.unshift(File.expand_path("../../../week0_explore/mud_manager/lib", __dir__))
+  require "mud_manager"
+end
+
+$LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
+require "mud_manager_mcp"
+
+require "optparse"
+
+options = { mode: :mcp }
+OptionParser.new do |o|
+  o.banner = "Usage: mud-manager [--mcp | --stdio-json] [--list-tools | --dump-spec]"
+  o.on("--mcp", "Run as an MCP (JSON-RPC 2.0) server over stdio (default)") { options[:mode] = :mcp }
+  o.on("--stdio-json", "Run the raw JSON-line protocol over stdio")         { options[:mode] = :json_line }
+  o.on("--list-tools", "List the advertised tools and exit")                { options[:list_tools] = true }
+  o.on("--dump-spec", "Print the primitives.json spec and exit")            { options[:dump_spec] = true }
+end.parse!
+
+if options[:list_tools]
+  MudManagerMcp::Spec.tools.each { |t| puts t.name }
+  exit 0
+end
+
+if options[:dump_spec]
+  puts MudManagerMcp::Spec.to_json_spec
+  exit 0
+end
+
+config     = MudManagerMcp::Config.new
+pool       = MudManagerMcp::SessionPool.new(config)
+dispatcher = MudManagerMcp::Dispatcher.new(pool)
+
+at_exit { pool.close }
+
+case options[:mode]
+when :json_line
+  MudManagerMcp::JsonLineServer.new(dispatcher: dispatcher, pool: pool).run
+else
+  MudManagerMcp::McpServer.new(dispatcher: dispatcher).run
+end

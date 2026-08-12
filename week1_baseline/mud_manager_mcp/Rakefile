@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require "rake/testtask"
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test" << "lib"
+  t.test_files = FileList["test/test_*.rb"]
+end
+
+# Regenerate primitives.json from the live Primitives constants.
+desc "Regenerate primitives.json from the live tool spec"
+task :spec do
+  sh RbConfig.ruby, "bin/mud-manager", "--dump-spec", out: "primitives.json"
+end
+
+task default: :test
