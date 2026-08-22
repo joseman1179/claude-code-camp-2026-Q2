@@ -78,11 +78,12 @@ mcp_servers:
 |------|-------------|
 | `Tools::FileSystem` (`pwd`, `read_file`, `write_file`, `search_files`, …) | a filesystem MCP server. Trade-off: needs node/npx, and its root is fixed in `args:` instead of tracking `working_dir`. |
 | `Tools::Shell` (`run_command`) | a shell MCP server of your choosing. |
-| `Tools::Mud` (embedded `MudManager::Session`) | the `mud-manager --mcp` daemon, which already wrapped the same `mud_manager` gem. |
+| `Tools::Mud` (embedded `MudManager::Session`) | the `mud-manager --mcp` daemon, which ships inside the `mud_manager` gem. |
 | `Tools::McpMud`, the `mud:` / `working_dir:` / `allowed_commands:` / `shell_timeout:` arguments, `BOUKENSHA_MUD_MODE`, and `mud:` in settings.yaml | one `mcp_servers:` entry. |
 
-The gemspec now declares **no tool dependencies at all** — `mud_manager` went
-with `Tools::Mud`. Servers are separate processes and bring their own.
+The gemspec now declares **no tool dependencies at all** — boukensha doesn't
+depend on `mud_manager`; it just spawns the `mud-manager` binary that the
+`mud_manager` gem installs. Servers are separate processes and bring their own.
 
 `working_dir:` survives on `Boukensha.run` / `.repl`, but only as Context
 metadata: it registers nothing.
@@ -114,4 +115,4 @@ This is just observations we dont want to fix these right now just to perserve c
 - Servers spawn **eagerly** at boot: every entry costs a subprocess and a handshake even if the LLM never calls it. Fine at two servers; revisit past that.
 - Non-text MCP content blocks (images, embedded resources) are dropped rather than rendered — they yield an empty string, not an exception. No MUD tool can hit this.
 - The backends advertise every listed parameter as required, which is wrong for third-party servers with genuinely optional params. Fixing it means plumbing `inputSchema["required"]` through `Boukensha::Tool`, which touches all tools.
-- `~/.boukensharc` YAML support (`boukensha_path:` / `boukensha_dir:` keys, plus bare single-line path backward compat) from step 9 was not carried forward into this step's initial rewrite, which silently mis-parsed step-9-era rc files. This step's loader now restores that step-9 behavior verbatim — see [`docs/plans/floating_artifacts/bounkensharc.md`](../../../docs/plans/floating_artifacts/bounkensharc.md) for the incident writeup; keep that doc in mind before rewriting `boukensha_loader.rb` in later steps.
+- `~/.boukensharc` YAML support (`boukensha_path:` / `boukensha_dir:` keys, plus bare single-line path backward compat) from step 9 was not carried forward into this step's initial rewrite, which silently mis-parsed step-9-era rc files. This step's loader now restores that step-9 behavior verbatim — see [`docs/plans/floating_artifacts/boukensharc.md`](../../../docs/plans/floating_artifacts/boukensharc.md) for the incident writeup; keep that doc in mind before rewriting `boukensha_loader.rb` in later steps.

@@ -22,9 +22,11 @@ mcp_servers:
   # never chdirs for you. A relative path here only works when you happen to
   # launch from the repo root. Nothing hunts for the binary on your behalf any
   # more — that discovery logic died with Tools::McpMud, which is the trade
-  # for the agent not knowing what a MUD is. `mud-manager` is installed on
-  # PATH (the mud_manager gem), so we call it directly instead.
-  # This entry is `required` (the default), so a bad path fails loudly at boot.
+  # for the agent not knowing what a MUD is. `mud-manager` ships inside the
+  # `mud_manager` gem (see docs/plans/mud_manager/single_gem.md), so install
+  # that gem and the binary is on PATH; we call it by name.
+  # `required: false` (below) means a missing daemon downgrades to a warning
+  # instead of a fatal error — the agent then runs with no MUD tools.
   mud:
     command: mud-manager
     args:    [--mcp]

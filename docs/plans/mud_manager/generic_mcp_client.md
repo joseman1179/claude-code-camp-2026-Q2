@@ -30,7 +30,7 @@ our repo):
 |---|------|---------|--------------------|
 | 1 | `generic_interfacing.md` | Build the daemon (`mud_manager_mcp`) — the *server* side | ✅ done |
 | 2 | **`generic_mcp_client.md`** (this) | boukensha consumes *any* MCP server — the *client* side | ✅ **already the end state of step 10** |
-| 3 | `single_gem.md` | Merge the daemon into the domain gem | ⏸ deferred ("leave as-is") |
+| 3 | `single_gem.md` | Merge the daemon into the domain gem | ✅ done (daemon ships in `mud_manager`) |
 
 ---
 
@@ -183,9 +183,10 @@ from `generic_interfacing.md`:
    the MUD surface to `tools/mud.rb`; our step 10 replaced *all* built-in tools
    with the generic `tools/mcp.rb`. There is no MUD-specific tool file in
    boukensha.
-3. **Plan 3 is deferred.** The instructor's series ends with `single_gem.md`
-   (merge the daemon into the domain gem). We deliberately left
-   `mud_manager_mcp` as a separate gem ("leave as-is").
+3. **Plan 3 is done.** The instructor's series ends with `single_gem.md`
+   (merge the daemon into the domain gem). That merge is now carried out — the
+   daemon ships inside the `mud_manager` gem (one binary: `mud-manager`). See
+   `single_gem.md`.
 4. **One divergence from the instructor's tree:** we added
    `lib/boukensha/backends/deepseek.rb` (7 backends vs. the instructor's 6).
    Unrelated to MCP, but it is the only file-level difference in
@@ -229,7 +230,7 @@ as the plan's known-limitations ledger:
   `Boukensha::Tool`.
 - **`.boukensharc` YAML support:** step 9's `boukensha_path:` / `boukensha_dir:`
   keys must not regress when `boukensha_loader.rb` is touched in later steps
-  (see `docs/plans/floating_artifacts/bounkensharc.md`).
+  (see `docs/plans/floating_artifacts/boukensharc.md`).
 
 ---
 

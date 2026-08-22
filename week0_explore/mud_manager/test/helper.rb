@@ -8,9 +8,8 @@ require "stringio"
 MUD_MANAGER_MCP_ROOT = File.expand_path("..", __dir__)
 MUD_MANAGER_MCP_LIB  = File.join(MUD_MANAGER_MCP_ROOT, "lib")
 MUD_MANAGER_BIN      = File.join(MUD_MANAGER_MCP_ROOT, "bin", "mud-manager")
-# The domain gem: prefer the sibling source checkout over an installed gem so
-# the tests exercise exactly the Session/Primitives this repo ships.
-MUD_MANAGER_LIB      = File.expand_path("../../../week0_explore/mud_manager/lib", __dir__)
+# Domain lib and daemon lib are the same gem now.
+MUD_MANAGER_LIB      = MUD_MANAGER_MCP_LIB
 
 $LOAD_PATH.unshift(MUD_MANAGER_LIB) unless $LOAD_PATH.include?(MUD_MANAGER_LIB)
 $LOAD_PATH.unshift(MUD_MANAGER_MCP_LIB) unless $LOAD_PATH.include?(MUD_MANAGER_MCP_LIB)
